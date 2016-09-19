@@ -35,6 +35,7 @@ package
 		 * The Feathers Button control that we'll be creating.
 		 */
 		protected var button:Button;
+		private var _ex:Barcode;
 
 		/**
 		 * Where the magic happens. Start after the main class has been added
@@ -56,6 +57,11 @@ package
 			//create a button and give it some text to display.
 			this.button = new Button();
 			this.button.label = "Open QRCode";
+			
+			// TODO Auto Generated method stub
+			_ex= new Barcode();
+			_ex.addEventListener(BarcodeEvent.RESULT, onResult);
+			_ex.addEventListener(BarcodeEvent.CANCEL, onCancel);
 
 			//an event that tells us when the user has tapped the button.
 			this.button.addEventListener(Event.TRIGGERED, button_triggeredHandler);
@@ -82,11 +88,15 @@ package
 		protected function button_triggeredHandler(event:Event):void
 		{
 			
-		
+			openQRCODE();
 			
-			var _ex:Barcode = new Barcode();
-			_ex.addEventListener(BarcodeEvent.RESULT, onResult);
-			_ex.addEventListener(BarcodeEvent.CANCEL, onCancel);
+	
+
+		}
+		
+		private function openQRCODE():void
+		{
+
 			
 			if (_ex.isSupported())
 			{
@@ -113,23 +123,21 @@ package
 				trace("isSupported: ", _ex.isSupported());
 			}
 			
-			function onCancel(e:BarcodeEvent):void
-			{
-				trace("scan canceled")
-				feathes3.instance._starling.start();
-			}
-			
-			function onResult(e:BarcodeEvent):void
-			{
-				trace("type is: ", e.param.type)
-				trace("data is: ", e.param.data);
-				
-				feathes3.instance._starling.start();
-			}
-
+		
+		}		
+		private function onCancel(e:BarcodeEvent):void
+		{
+			trace("scan canceled")
+			feathes3.instance._starling.start();
 		}
 		
-	
+		private function onResult(e:BarcodeEvent):void
+		{
+			trace("type is: ", e.param.type)
+			trace("data is: ", e.param.data);
+			
+			feathes3.instance._starling.start();
+		}
 		
 	}
 }
